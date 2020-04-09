@@ -65,6 +65,80 @@ rvk$matssvaedi = factor(rvk$matssvaedi, levels=c("Hlíðar","Kópavogur:Hjallar,
 ```
 
 h)
-Hugsum okkur nú að eignirnar í rvk gagnarammanum ykkar sé þýðið ykkar. Nú ætlum við að taka úrtak úr þýðinu, 100 eignir úr hverju hverfi. 
+Hugsum okkur nú að eignirnar í rvk gagnarammanum ykkar sé þýðið ykkar. Nú ætlum við að taka úrtak úr þýðinu, 100 eignir úr hverju hverfi.
+
+```{r}
+
+```
+
+i)
+Búið til töflu sem sýnir hlutfall sérbýla og íbúða í hverfunum þremur. Það á s.s. að vera hægt að lesa hver hlutföll sérbýla og íbúða er í hverju hverfi fyrir sig.
+
+```{r}
+
+```
+
+j)
+Kannið með kí-kvaðrat prófi hvort marktækur munur sé á hlutfalli sérbýla í hverfunum þremur. Sýnið úttakið úr prófinu. Setjið tilgátunar fram formlega. Sýnið úttakið úr prófinu. Tilgreinið gildið á prófstærðinni, p-gildið og hvaða ályktun þið dragið í samfelldu máli.
+
+```{r}
+
+```
+
+k)
+Hvaða forsendur þurfa að vera uppfylltar svo framkvæma megi kí-kvaðrat próf? Eru forsendurnar uppfylltar í prófinu í j-lið?
+
+```{r}
+
+```
+
+l)
+Teiknið mynd sem sýnir fermetraverð eftir tegund eigna (sérbýli-íbúðir). Hér á að nota gögnin úr hverfunum ykkar þremur en ekki að skipta upp eftir hverfunum.
+
+```{r}
+
+```
+
+m)
+Kannið með viðeigandi tilgátuprófi hvort munur sé á meðalfermetrverði sérbýla og íbúða. Hér eigið þið að nota gögnin úr hverfunum ykkar þremur en ekki skipta þeim upp eftir hverfunum. Setjið tilgáturnar fram formlega. Sýnið úttakið úr prófinu. Tilgreinið gildið á prófstærðinni, p-gildið og hvaða ályktun þið dragið í samfelldu máli.
+
+```{r}
+
+```
+
+n)
+Smíðið 95% öryggisbil fyrir mismun á meðaltölum sérbýla og einbýla. Setjið öryggisbilið fram á formlegan hátt.
+
+```{r}
+
+```
+
+o)
+Teiknið mynd sem sýnir fermetraverð íbúða eftir hverfnum þremur.
+
+```{r}
+
+```
+
+p)
+Kannið með viðeigandi tilgátuprófi hvort munur sé á meðalfermetrverði íbúða eftir hverunum þremur. Setjið tilgáturnar fram formlega. Sýnið úttakið. Tilgreinið gildið á prófstærðinni, p-gildið og hvaða ályktun þið dragið í samfelldu máli.
+
+```{r}
+
+```
+
+q)
+Teiknið mynd sem sýnir sambandið á milli stærðar og verðs íbúðaeignanna í hverfunum ykkar þremur.
+
+```{r}
+
+```
+
+r)
+Smíðið aðhvarfsgreiningarlíkan sem nota má til að spá fyrir um verð eigna út frá stærð. Hér eigið þið að nota gögnin úr hverfunum ykkar þremur en ekki skipta þeim upp eftir hverfunum. Sýnið úttakið. Tilgreinið í textanum hvert matið ykkar á skurðpunktinum og hallatölunni eru. Segið með örfáum orðum hvort þið teljið skynsamlegt að nota líkan sem þetta til að spá fyrir um verð út frá stærð eignanna.
+
+```{r}
+
+```
 
 
