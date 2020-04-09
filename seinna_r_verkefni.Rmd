@@ -1,0 +1,70 @@
+---
+title: "Seinna R Verkefni"
+authors: "Óskar Höskuldsson (osh16@hi.is) og Viktor Sigbjörn Víðisson (vsv8@hi.is)"
+output: html_document
+---
+
+```{r setup, include=FALSE, warning = F, message = F}
+knitr::opts_chunk$set(echo = TRUE)
+options(warn=-1)
+options(scipen=999)
+library(utf8)
+library(ggplot2)
+library(forcats)
+library(dplyr)
+options(warn=-1)
+```
+
+a)
+Búið til verkefni (e. Project) í vinnumöppunni ykkar og nefnið það seinna_r_verkefni.
+
+b)
+Lesið gagnaskrána husnaedisverd_2017.csv inn í R/RStudio og geymið í hlut sem ber upphafsstafi þeirra sem verkefnið vinna (ef Gréta Halldórsdóttir og Sigurður Jónsson eru að vinna saman skulu þau nefna hlutinn gs en ef Atli Pétursson er að vinna einn skal hann nefna hlutinn sinn ap). Kannið gerð breytanna og breytið gerð þeirra sem eru ekki af réttri gerð (ef einhverjar).
+
+```{r}
+ov <- read.table("husnaedisverd_2017.csv", header=TRUE, sep=";")
+```
+
+c)
+Breytan kaupverd er í þúsundum króna, breytið henni þannig að hún verði í krónum.
+
+```{r}
+ov$kaupverd = ov$kaupverd*1000
+```
+
+d)
+Búið til nýja breytu í gagnarammanum ykkar sem inniheldur fermetraverð eignanna, nefnið breytuna fermetraverd.
+
+```{r}
+ov$fermetraverd = ov$kaupverd/ov$birtm2
+```
+
+e)
+Búið til nýja breytu sem þið skulið kalla teg_eign_groft sem byggir á teg_eign breytunni. Breytan á að innihalda tvo flokka: Sérbýli (Einbýlishús, Parhús, Raðhús) og Íbúð (Íbúðareign). Ábending: notið fct_recode() aðferðina.
+
+```{r}
+ov$teg_eign_groft <- forcats::fct_recode(ov$teg_eign, Sérbýli="Einbýlishús", Sérbýli="Parhús", Sérbýli="Raðhús", Íbúð="Íbúðareign")
+```
+
+f)
+Búið til nýja gagnagrind (dataframe) sem inniheldur eignir úr þremur hverfum í Reykjavík og kallið hana rvk. Þið veljið hvaða hverfi sjálf en hverfin sem þið veljið þurfa að innihalda a.m.k. 200 eignir, þarf af 30 sérbýli.
+
+```{r}
+hverfi <- c(80,330,800)
+rvk <- dplyr::filter(ov, matssvaedi%in%hverfi)
+```
+
+g)
+Breytið matssvaedi breytunni í rvk gagnarammanum í flokkabreytu og nefnið flokkana með heiti hverfanna.
+
+```{r}
+rvk$matssvaedi[rvk$matssvaedi == 80] = "Hlíðar"
+rvk$matssvaedi[rvk$matssvaedi == 330] = "Kópavogur:Hjallar,Smárar"
+rvk$matssvaedi[rvk$matssvaedi == 800] = "Mosfellsbær"
+rvk$matssvaedi = factor(rvk$matssvaedi, levels=c("Hlíðar","Kópavogur:Hjallar,Smárar","Mosfellsbær"))
+```
+
+h)
+Hugsum okkur nú að eignirnar í rvk gagnarammanum ykkar sé þýðið ykkar. Nú ætlum við að taka úrtak úr þýðinu, 100 eignir úr hverju hverfi. 
+
+
