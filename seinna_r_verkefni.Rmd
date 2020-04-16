@@ -68,35 +68,54 @@ h)
 Hugsum okkur nú að eignirnar í rvk gagnarammanum ykkar sé þýðið ykkar. Nú ætlum við að taka úrtak úr þýðinu, 100 eignir úr hverju hverfi.
 
 ```{r}
-
+set.seed(19)
+rvk %>% 
+  group_by(matssvaedi) %>%
+  sample_n(size = 100) -> urtak1
 ```
 
 i)
 Búið til töflu sem sýnir hlutfall sérbýla og íbúða í hverfunum þremur. Það á s.s. að vera hægt að lesa hver hlutföll sérbýla og íbúða er í hverju hverfi fyrir sig.
 
 ```{r}
-
+tafla <- prop.table(table(rvk$matssvaedi, rvk$teg_eign_groft))
 ```
 
 j)
 Kannið með kí-kvaðrat prófi hvort marktækur munur sé á hlutfalli sérbýla í hverfunum þremur. Sýnið úttakið úr prófinu. Setjið tilgátunar fram formlega. Sýnið úttakið úr prófinu. Tilgreinið gildið á prófstærðinni, p-gildið og hvaða ályktun þið dragið í samfelldu máli.
 
 ```{r}
-
+ki_kvadrat <- chisq.test(tafla)
+ki_kvadrat
 ```
+Núlltilgáta: $H_{0}=\mu_{1}=\mu_{2}$
+
+Gagntilgáta: $H_{1}=\mu_{1}\neq\mu_{2}$
+
+Prófstærð = 115.67, fríðgráðurnar eru tvær og p-gildi = 0.00000000000000022. a er 0.05 sem er stærra en p-gildið svo við höfnum núlltilgátunni. Þar með drögum við þá ályktun að það sé munur á hlutfalli sérbýla í þessum þrem hverfum.
 
 k)
 Hvaða forsendur þurfa að vera uppfylltar svo framkvæma megi kí-kvaðrat próf? Eru forsendurnar uppfylltar í prófinu í j-lið?
 
 ```{r}
-
+ki_kvadrat$expected
 ```
+
+Í fyrsta lagi verður hver athugun að vera óháð hinum á þá vegu að ekki er hægt að finna út gildi eins þátttakanda út frá frammistöðu annars. Til dæmis: Það hvort einn þátttakandi veiti aðstoð þegar fönguleg kona missir blaðabunka á ekki að tengjast því hvort hún fái hjálp frá öðrum við síðara tækifæri. Vegna þessa er óheimilt að prófa sama þátttakandann oftar en einu sinni.
+
+Í öðru lagi þarf úrtakið að vera nokkuð stórt svo væntigildin verði ekki mjög lág. Algengt viðmið (sem þó er ekki alheilagt) er að ekkert væntigildi sé lægra en fimm, að því gefnu að summa raða og dálka séu ekki mjög skekktar. Þó er varasamt að reikna Pearson kíkvaðrat í töflu með mjög lágum væntigildum vegna þess hve það dregur úr afköstum prófsins. Dreifing nálgast að öllu jöfnu normaldreifingu eftir því sem fjöldi athuganna eykst og að því gefnu að breytan sé normaldreifð í þýði.
+
+Í þriðja lagi er mikilvægt að gögnin séu tvíhliða. Á efri töflunni hér að neðan er skáldað dæmi um tvíhliða krosstöflu. Bæði sést þegar atvikið á sér stað (þátttakandi veitir aðstoð) og þegar atvikið á sér ekki stað (þátttakandi veitir ekki aðstoð). Neðri taflan hér að neðan gefur engar upplýsingar um þetta og því myndi kí-kvaðrat próf á henni leiða til rangrar niðurstöðu.
+
+
+Allar forsendurnar, hér að ofan, fyrir kí-kvaðrat próf eru uppfylltar. Hverfin eru óháð hvor öðru, ekkert gildi væntanlegrar tíðni er undir 5 og gagntilgátan er tvíhliða.
+
 
 l)
 Teiknið mynd sem sýnir fermetraverð eftir tegund eigna (sérbýli-íbúðir). Hér á að nota gögnin úr hverfunum ykkar þremur en ekki að skipta upp eftir hverfunum.
 
 ```{r}
-
+ggplot(data=rvk, aes(x=teg_eign_groft, y=fermetraverd)) + geom_boxplot() + xlab("Tegund eigna") + ylab("Fermetraverð")
 ```
 
 m)
@@ -114,10 +133,10 @@ Smíðið 95% öryggisbil fyrir mismun á meðaltölum sérbýla og einbýla. Se
 ```
 
 o)
-Teiknið mynd sem sýnir fermetraverð íbúða eftir hverfnum þremur.
+Teiknið mynd sem sýnir fermetraverð íbúða eftir hverfunum þremur.
 
 ```{r}
-
+ggplot(data=filter(rvk, teg_eign_groft=="Íbúð"),aes(x=matssvaedi, y=fermetraverd)) + geom_boxplot() + xlab("Hverfi") + ylab("Fermetraverð")
 ```
 
 p)
@@ -131,7 +150,7 @@ q)
 Teiknið mynd sem sýnir sambandið á milli stærðar og verðs íbúðaeignanna í hverfunum ykkar þremur.
 
 ```{r}
-
+ggplot(data=filter(rvk, teg_eign_groft == "Íbúð"), aes(x=birtm2, y=kaupverd, color=matssvaedi)) + geom_point() + labs(x = "Stærð", y = "Kaupverð", color="Hverfi")
 ```
 
 r)
