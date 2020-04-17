@@ -14,6 +14,7 @@ library(forcats)
 library(dplyr)
 options(warn=-1)
 ```
+Óskar Höskuldsson (osh16\@hi.is) og Viktor Sigbjörn Víðisson (vsv8\@hi.is)
 
 a)
 Búið til verkefni (e. Project) í vinnumöppunni ykkar og nefnið það seinna_r_verkefni.
@@ -92,7 +93,7 @@ Núlltilgáta: $H_{0}=\mu_{1}=\mu_{2}$
 
 Gagntilgáta: $H_{1}=\mu_{1}\neq\mu_{2}$
 
-Prófstærð = 115.67, fríðgráðurnar eru tvær og p-gildi = 0.00000000000000022. a er 0.05 sem er stærra en p-gildið svo við höfnum núlltilgátunni. Þar með drögum við þá ályktun að það sé munur á hlutfalli sérbýla í þessum þrem hverfum.
+Prófstærð = 0.28942, frígráðurnar eru tvær og p-gildi = 0.8653. a er 0.05 sem er stærra en p-gildið svo við höfnum núlltilgátunni. Þar með drögum við þá ályktun að það sé munur á hlutfalli sérbýla í þessum þrem hverfum.
 
 k)
 Hvaða forsendur þurfa að vera uppfylltar svo framkvæma megi kí-kvaðrat próf? Eru forsendurnar uppfylltar í prófinu í j-lið?
@@ -122,15 +123,24 @@ m)
 Kannið með viðeigandi tilgátuprófi hvort munur sé á meðalfermetrverði sérbýla og íbúða. Hér eigið þið að nota gögnin úr hverfunum ykkar þremur en ekki skipta þeim upp eftir hverfunum. Setjið tilgáturnar fram formlega. Sýnið úttakið úr prófinu. Tilgreinið gildið á prófstærðinni, p-gildið og hvaða ályktun þið dragið í samfelldu máli.
 
 ```{r}
-
+tilgata <- t.test(rvk$fermetraverd~rvk$teg_eign_groft, alternative = "two.sided")
+tilgata
 ```
+
+Núlltilgáta: $H_{0}=\mu_{1}=\mu_{2}$
+
+Gagntilgáta: $H_{1}=\mu_{1}\neq\mu_{2}$
+
+Prófstærð = -12.993, fríðgráðurnar eru 543.45 og p-gildi = 0.00000000000000022 svo að núlltilgátu er hafnað. Þar með drögum við þá ályktun að það sé munur á meðalfermetraverði sérbýla og íbúða í þessum þrem hverfum.
 
 n)
 Smíðið 95% öryggisbil fyrir mismun á meðaltölum sérbýla og einbýla. Setjið öryggisbilið fram á formlegan hátt.
 
 ```{r}
-
+orbil <- tilgata$conf.int
 ```
+
+Öryggisbilið er `r format(orbil[1])` < $\mu$ < `r format(orbil[2])`
 
 o)
 Teiknið mynd sem sýnir fermetraverð íbúða eftir hverfunum þremur.
@@ -143,8 +153,18 @@ p)
 Kannið með viðeigandi tilgátuprófi hvort munur sé á meðalfermetrverði íbúða eftir hverunum þremur. Setjið tilgáturnar fram formlega. Sýnið úttakið. Tilgreinið gildið á prófstærðinni, p-gildið og hvaða ályktun þið dragið í samfelldu máli.
 
 ```{r}
+tilgata <- anova(aov(fermetraverd~matssvaedi, filter(rvk, teg_eign_groft=="Íbúð")))
+profstaerd <- tilgata$`F value`[1]
+p_gildi <- tilgata$`Pr(>F)`[1]
 
+tilgata
 ```
+
+Núlltilgáta: $H_{0}=\mu_{1}=\mu_{2}$
+
+Gagntilgáta: $H_{1}=\mu_{1}\neq\mu_{2}$
+
+Prófstærð = `r format(profstaerd)`, fríðgráðurnar eru tvær og p-gildi = `r format(p_gildi)`. p-gildið er minna en prófstærðin svo núlltilgátunni er hafnað. Þar með drögum við þá ályktun að það sé munur á meðalfermetraverði íbúða í þessum þrem hverfum.
 
 q)
 Teiknið mynd sem sýnir sambandið á milli stærðar og verðs íbúðaeignanna í hverfunum ykkar þremur.
@@ -157,7 +177,15 @@ r)
 Smíðið aðhvarfsgreiningarlíkan sem nota má til að spá fyrir um verð eigna út frá stærð. Hér eigið þið að nota gögnin úr hverfunum ykkar þremur en ekki skipta þeim upp eftir hverfunum. Sýnið úttakið. Tilgreinið í textanum hvert matið ykkar á skurðpunktinum og hallatölunni eru. Segið með örfáum orðum hvort þið teljið skynsamlegt að nota líkan sem þetta til að spá fyrir um verð út frá stærð eignanna.
 
 ```{r}
+ves <- lm(formula = birtm2 ~ kaupverd, data=urtak1)
+likan <- summary(ves)
+hallatala <- likan$`coefficients`[1]
+skurdpunktur <- likan$`coefficients`[2]
 
+likan
+
+ggplot(ves, aes(sample=.resid)) + stat_qq()
 ```
 
+Mat á hallatölu = `r format(hallatala)` og mat á skurðpunkt = `r format(skurdpunktur)`. Okkur finnst skynsamlegt að nota þetta líkan til að spá fyrir um verð út frá stærð eignanna.
 
